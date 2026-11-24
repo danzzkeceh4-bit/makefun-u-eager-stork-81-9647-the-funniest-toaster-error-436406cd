@@ -26,6 +26,12 @@ def main() -> int:
     # No trailing newline: the entry is exactly the line, nothing more.
     with open(path, "w", encoding="utf-8", newline="") as f:
         f.write(text)
+    # Read back and verify the file holds exactly the validated line.
+    with open(path, "r", encoding="utf-8", newline="") as f:
+        written = f.read()
+    if written != text:
+        print(f"verification failed: {path} does not hold the entry", file=sys.stderr)
+        return 1
     print(f"wrote {len(text)} characters to {path}")
     return 0
 
